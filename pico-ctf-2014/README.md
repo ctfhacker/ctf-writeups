@@ -5,17 +5,8 @@ What a fun challenge! We have a pwned website and we have to figure out how to p
 ## Recon
 Looking at the `steves_list_backup.zip` we see the following files:
 ```
-$ ll steves_list_backup
-total 156
-drwxr-xr-x 5 ctf ctf  4096 Oct 25 18:30 ./
-drwxrwxr-x 3 ctf ctf  4096 Nov 12 17:11 ../
--rw-r--r-- 1 ctf ctf   934 Oct 25 18:28 cookies.php
-drwxr-xr-x 2 ctf ctf  4096 Oct 25 18:28 includes/
--rw-r--r-- 1 ctf ctf   751 Oct 25 18:28 index.php
-drwxr-xr-x 2 ctf ctf  4096 Oct 25 18:30 posts/
--rw-r--r-- 1 ctf ctf   371 Oct 25 18:29 root_data.php
--rw-r--r-- 1 ctf ctf 92413 Oct 25 18:28 Steve.png
-drwxr-xr-x 2 ctf ctf  4096 Oct 25 18:28 templates/
+$ ls
+cookies.php  includes  index.php  posts  root_data.php  Steve.png  templates
 ```
 
 The first file to note is `cookies.php`:
