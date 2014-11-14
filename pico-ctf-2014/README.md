@@ -187,7 +187,7 @@ After
 <i> Words words words </i>
 ```
 
-There is a fun feature with `prag_replace` that we can exploit here. In our regex `pattern` if we include the `e` flag, then the regex match will be replaced with the result of executable code aka a function, such as our old friends `file_get_contents` or `system`.
+There is a fun feature with `preg_replace` that we can exploit here. In our regex `pattern` if we include the `e` flag, then the regex match will be replaced with the result of executable code aka a function, such as our old friends `file_get_contents` or `system`.
 
 Let's make a filter that will utilize this "feature".
 
