@@ -19,9 +19,8 @@ The first file to note is `cookies.php`:
  19     setcookie('custom_settings', urlencode(serialize(true)), time() + 86    400 * 30, "/");
  20     setcookie('custom_settings_hash', sha1(AUTH_SECRET . serialize(true)    ), time() + 86400 * 30, "/");
  21   }
-
 ```
-Lines 19 and 20 show that if the cookie *custom_settings* isn't set aka if it is the user's first visit to the website, then two cookies are set: *custom_settings* and *custom_settings_hash*.
+Lines 19 and 20 show that if the cookie `custom_settings` isn't set aka if it is the user's first visit to the website, then two cookies are set: `custom_settings` and `custom_settings_hash`.
 
 This can be verified in Google Chrome via the developer console (`Right Click -> Inspect Element -> 'Console'`)
 ```
@@ -38,7 +37,7 @@ Line 5 of the same file is of key importance to us.
   8     }
 ```
 
-Ah! So we are taking the cookie value in _custom_settings_, prepending the _AUTH_SECRET_ and performing a sha1 hash. This screams to us, **LENGTH EXTENSION ATTACK**. For more information, [click here](http://en.wikipedia.org/wiki/Length_extension_attack).
+Ah! So we are taking the cookie value in `custom_settings`, prepending the `AUTH_SECRET` and performing a sha1 hash. This screams to us, **LENGTH EXTENSION ATTACK**. For more details on this technique, [click here](http://en.wikipedia.org/wiki/Length_extension_attack).
 
 Essentially, if we know the input data, the resulting hash, and the hash type, we can append malicious code to the initial data and receive a hash that will pass the given test. To do the hash calculation, we will utilize [hlextend](https://github.com/stephenbradshaw/hlextend).
 
@@ -99,20 +98,6 @@ Now, what can we do with this new cookie creation?
 
 Let's take a quick look at the `classes.php` file:
 ```php
-$ cat steves_list_backup/includes/classes.php 
-<?php
-  class Filter {
-    protected $pattern;
-    protected $repl;
-    function __construct($pattern, $repl) {
-      $this->pattern = $pattern;
-      $this->repl = $repl;
-    }
-    function filter($data) {
-      return preg_replace($this->pattern, $this->repl, $data);
-    }
-  };
-
   class Post {
     protected $title;
     protected $text;
@@ -153,7 +138,40 @@ $ cat steves_list_backup/includes/classes.php
 ?>
 ```
 
-We have a *Post* class that contains the **title** of a post, the **text** of a post, and **filters** on a post to essentially write markdown-style data without having to worry about html tags (or at least that was the intended purpose ;-)
+We have a *Post* class that contains the `title` of a post, the `text` of a post, and `filters` on a post to essentially write markdown-style data without having to worry about html tags (or at least that was the intended purpose ;-)
+
+There is a hint in the destructor of `// debugging stuff`. Typically, this is something to look out for.
+
+When called, the destructor calls each filter in the Post's `filters` on the `text` of the Post. Let's take a closer look at what the filter does.
+```php
+<?php
+  class Filter {
+    protected $pattern;
+    protected $repl;
+    function __construct($pattern, $repl) {
+      $this->pattern = $pattern;
+      $this->repl = $repl;
+    }
+    function filter($data) {
+      return preg_replace($this->pattern, $this->repl, $data);
+    }
+  };
+```
+
+Ah ha! Good ole `preg_replace`. This function replaces the match of the regex `pattern` in `data` with `repl`.
+Here is the given example in the code:
+```php
+new Filter("/\[i\](.*)\[\/i\]/i", "<i>\\1</i>")
+```
+Applying this filter will do the following:
+
+Before
+```
+[i] Words words words [/i]
+```
+After
+```
+<i> Words words words </i>
 
 ```php
 <?php
