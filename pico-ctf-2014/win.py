@@ -10,7 +10,6 @@ import subprocess
 
 def php_urlencode(s):
     '''Return php urlencoded string'''
-    print "ENCODE: " + s
     s = s.replace("\x00", "\0")
     encode_php = "<?php $text = <<<EOD\n{}\nEOD;\necho urlencode($text);\n?>".format(s)
 
