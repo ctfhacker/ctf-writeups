@@ -14,4 +14,4 @@ Input a password, it is xor'ed with a key and if it matches the password from a 
 
 Give a base64 encoded message, and get the md5 sum of the original message. Stack canaries are on. There is a "captcha" before sending your message that is calculated with the stack canary. Random is also seeded with time(), which we also know because we have access to the server itself. Knowing this, we can calculate the calculate the stack canary ourselves. The base64 decode function allows an overflow to happen. The decoded message contains the canary at the correct location, and then a ret2system was easy peasy.
 
-
+Implementation of the brainfuck language. Use the pointer to leak the address of `puts` then overwrite `puts` with the address of a few instructions after `puts` in `main`. Send a second `bf` instruction with our rop payload of `system('/bin/sh')` from their libc. Overwrite `puts` a second time with a stack pivot to add to esp and reach our `system` call. `PROFIT!`
