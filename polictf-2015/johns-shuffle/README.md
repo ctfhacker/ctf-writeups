@@ -19,7 +19,7 @@ Once we have control of EIP, and the fact that NX is on, we have to start ROP'in
 ## Exploit
 * Overflow the stack to control EIP.
 * ROP into the following chain:
-    * `read` to read an additional input of `/bin/sh` into the .bss segment
+    * `read` to add `/bin/sh` into the .bss segment
     * `system` into the .bss segment where we read our `/bin/sh` string
 * ???
 * Profit
