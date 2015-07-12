@@ -76,7 +76,7 @@ Exploit will work as follows:
 
 ### Exploit code
 
-```
+```python
 from pwn import *
 
 """
