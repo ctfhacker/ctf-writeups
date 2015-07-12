@@ -14,7 +14,7 @@ John is completely drunk and unable to protect his poor stack.. Fortunately he c
 ## Recon
 The first shot at overflowing by throwing a ton of `A`'s worked. I don't actually know what the vulnerbility was, as I didn't open the binary in IDA.
 
-Once we have control of EIP, and the fact that NX is on, we have to start ROP'ing. Using `pwntools`, We immediately see that we have `system` in our binary, but not the string `/bin/sh`. In order to ROP into `system` we have to have a pointer to the string `/bin/sh`. No worries though, because we also have `read` in our binary. 
+Once we have control of EIP, and the fact that NX is on, we have to start ROP'ing. Using `pwntools`, we immediately see that we have `system` in our binary, but not the string `/bin/sh`. In order to ROP into `system` we have to have a pointer to the string `/bin/sh`. No worries though, because we also have `read` in our binary. 
 
 ## Exploit
 * Overflow the stack to control EIP.
