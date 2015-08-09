@@ -5,8 +5,8 @@ Below is the main function for Runic:
 ![Runic main](runic.png)
 
 The following events happen:
-    * read() of 0x40 bytes (64 bytes)
-    * call() to the buffer that was just read into
+* read() of 0x40 bytes (64 bytes)
+* call() to the buffer that was just read into
 
 We can send a max of 64 bytes of shellcode, which is immediately executed.
 
