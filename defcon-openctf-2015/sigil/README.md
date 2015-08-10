@@ -4,13 +4,13 @@ The main funciton of sigil is below:
 ![Sigil main](sigil.png)
 
 The following occurs:
-* memory region located at address 0 is set to `read-write-execute` permissions
-* read() of length 16
+* memory region is set to `read-write-execute` permissions
+* read() of length 16 into that memory region
 * call to the buffer just read
 
-The gameplan for this exploit is to send an initial payload which will call `read()` into the `RWX` memory region. From here, we send the actual `/bin/sh` payload and `call 0` to execute it.
+The gameplan for this exploit is to send an initial payload which will call `read()` into the `RWX` memory region. From here, we send the actual `/bin/sh` payload which will continue executing after our stage 1 payload.
 
-We can call read via a syscall to make this shellcode small. The following must be setup for this to work:
+We can call `read` via `syscall` to make this shellcode small. The following must be setup for this to work:
 * rax - 0
 * rdi - file descriptor to read from, i.e. stdin
 * rsi - destination buffer
@@ -18,7 +18,7 @@ We can call read via a syscall to make this shellcode small. The following must 
 
 The `rax` register is already set to `0` for our `read` syscall, so no modification needs to happen there. The `rdi` register needs to be a `0` in order to read from stdin, so a simple `xor rdi, rdi` will accomplish this for us. The destination buffer is already stored in the rdx register when our shellcode is run, which means we only need to execute a `mov rsi, rdx` in order to setup our destination buffer location. Lastly, we need to set a read length, and a simple `mov rdx, 0x30` will work.
 
-The final stage one shellcode is below:
+The final stage 1 shellcode is below:
 ```
 mov rsi, rdx' # rdx already contains our buffer location
 mov edx, 0x30' # set our read length

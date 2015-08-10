@@ -4,8 +4,8 @@ context(arch='amd64')
 HOST = '127.0.0.1'
 PORT = 4444
 
-# r = process('./sigil')
-r = remote(HOST, PORT)
+r = process('./sigil')
+# r = remote(HOST, PORT)
 
 # Debug helper
 """
