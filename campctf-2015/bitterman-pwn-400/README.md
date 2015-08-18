@@ -14,8 +14,10 @@ Turns out, if we say that we will send 1024 bytes and send 1024 bytes, we crash 
 ## Exploit
 
 Because NX is turned on, we need to do some fancy ROP. Our ROP strategy is below:
-* Leak a libc address via ROPing to `puts()` with `puts` as the parameter. This will return the address of `puts` on the remote side. We can calculate the libc base address since we were given their libc in the problem (leaked_libc_read_address - original_libc_from_challenge = base_libc_on_server)
-* Call main so we can re-exploit with the knowledge of the libc base address
+* Leak a libc address via ROPing to `puts()` with `puts` as the parameter. 
+    - This will return the address of `puts` in the libc the binary is using. 
+    - We can calculate the libc base address since we were given their libc in the problem (leaked_libc_read_address - original_libc_from_challenge = base_libc_on_server)
+* Call main so we can re-exploit with the knowledge of the libc base address.
 
 This ROP construction is here:
 ```python
@@ -39,11 +41,11 @@ leaked_puts = r.recv()[:8].strip().ljust(8, '\x00')
 # Convert to integer
 leaked_puts = struct.unpack('Q', leaked_puts)[0]
 
-# Reset libc to the leaked offset
+# Rebase libc to the leaked offset
 libc.address = leaked_puts - libc.symbols['puts']
 ```
 
-From here, we can create a second ROP which will simply call `system` with `/bin/sh`. Luckily, `/bin/sh` is in libc, so we simply find where that string is, and call `system` on it.
+From here, we can create a second ROP which will simply call `system` with `/bin/sh`. Luckily, `/bin/sh` is in libc, so we simply find where that string is, and call `system` with it.
 
 The second ROP construction is below:
 
