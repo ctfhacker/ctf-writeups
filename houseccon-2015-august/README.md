@@ -53,7 +53,7 @@ ebiRib
 
 Pass one of our answers to rumkin and look at answers.
 
-![Picture of solved substitution vipher](/pics/cap.png)
+![Picture of solved substitution vipher](/houseccon-2015-august/pics/cap.png)
 
 Due to the theme, try `POTATO` and register as user
 
@@ -82,7 +82,7 @@ PE32 executable for MS Windows (console) Intel 80386 Mono/.Net assembly
 
 ![Are you kidding me](http://images.sodahead.com/polls/004110707/235434734_Are_You_Kidding_Me_answer_11_xlarge.jpeg)
 
-Oh well, it's .NET. We know that .NET can be decompiled to source using (dotPeek)[https://www.jetbrains.com/decompiler/].
+Oh well, it's .NET. We know that .NET can be decompiled to source using [dotPeek](https://www.jetbrains.com/decompiler/).
 
 Looking at the source, it looks like we are given a fake terminal to attempt to wardial a given phone number. We are also given an area code and a set of prefixes. The source shows that if a certain `Dial` function succeeds, the terminal closes. We should be able to brute force this:
 
@@ -171,7 +171,7 @@ Password
 aaaa
 ```
 
-![Admin Panel](/pics/admin-panel.png)
+![Admin Panel](/houseccon-2015-august/pics/admin-panel.png)
 
 ## Get dat IP
 ```
@@ -186,7 +186,7 @@ Seeing a message box and a few "Active" users, hints strongly towards Cross-Site
 <img/src="./"/onerror="&#0097;&#00108;&#00101;&#00114;&#00116;&#0040;&#0039;&#0088;&#0083;&#0083;&#0039;&#0041;">
 ```
 
-[XSS 1](/pics/xss-1.png)
+[XSS 1](/houseccon-2015-august/pics/xss-1.png)
 
 
 Our next task, is to test if our "Active" users are actually active. Sending a simple `<IMG>` tag to `ctaroot` trying to access an image on my AWS instance gives a successful request.
