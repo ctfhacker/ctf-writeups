@@ -24,6 +24,8 @@ Solve the captcha: `120117124101124117`
 * Convert each set to a letter
 * Offset the answer in order to pass to a substitution solver
 
+EDIT: Turns out this is actually octal. Whodathunkit?! Oh well, the solution also works below ;-)
+
 ```python
 >>> cap = '120117124101124117'
 >>> for offset in xrange(20):
