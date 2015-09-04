@@ -17,7 +17,7 @@ Began with the obvious of throwing the ciphertext into [quipquip](http://www.qui
 
 This immediately sparked the memory of the Da Vinci Code cryptex. 
 
-![Cryptex](http://www.google.com/imgres?imgurl=http://farm1.static.flickr.com/44/151655818_75f56d721d.jpg&imgrefurl=http://www.photoree.com/topic/gallery/cryptex/1&h=318&w=500&tbnid=_EUISJpJGfJ2tM:&docid=Ce3ANWyj37N7yM&ei=6pbpVcn0K4-dyASRuoH4Dw&tbm=isch&ved=0CD0QMygLMAtqFQoTCMmRvNi43ccCFY8OkgodEV0A_w)
+![Cryptex](cryptex.jpg)
 
 I began doing some awkward transformations of shifting each letter in the cipher text a number in the PSK:
 
