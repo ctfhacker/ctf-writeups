@@ -1,5 +1,6 @@
 import string
 import glob
+
 for filename in glob.glob('output*.txt'):
     if '00000' in filename:
         continue

