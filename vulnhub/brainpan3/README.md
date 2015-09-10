@@ -174,7 +174,7 @@ CODE REPOSITORY IS ALREADY ENABLED
 
 Turning on the code repo enabled a web service on port 8080, which also has a `/repo` directory containing the binaries used during this step:
 
-![Web service]()
+![Web service](repo-directory.png)
 
 Spending a little time with the binaries was interesting to see how they worked, but ultimately, nothing useful came from it. I'm not sure if this was a red herring or if there was another vulnerability here.
 
