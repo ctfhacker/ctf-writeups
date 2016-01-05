@@ -1,0 +1,199 @@
++OK Dovecot ready.
+CAPA
++OK
+CAPA
+TOP
+UIDL
+RESP-CODES
+PIPELINING
+USER
+SASL PLAIN
+.
+USER c
++OK
+PASS AllYourPresentsAreBelongToMe
++OK Logged in.
+STAT
++OK 5 20685
+UIDL
++OK
+1 000000045645f608
+2 000000055645f608
+3 000000065645f608
+4 000000075645f608
+5 000000085645f608
+.
+LIST
++OK 5 messages:
+1 6429
+2 647
+3 647
+4 6481
+5 6481
+.
+RETR 5
++OK 6481 octets
+Return-Path: <grinch@who-villeisp.com>
+X-Original-To: c@atnascorp.com
+Delivered-To: c@atnascorp.com
+Received: from grinchpc (ool-ad02ccd2.who-villeisp.com [86.75.30.9])
+	by atnascorp.com (Postfix) with ESMTP id A0BB38243D
+	for <c@atnascorp.com>; Tue, 15 Dec 2015 16:08:05 +0000 (UTC)
+From: "Grinch" <grinch@who-villeisp.com>
+To: <c@atnascorp.com>
+Subject: My Apologies & Holiday Greetings
+Date: Tue, 15 Dec 2015 16:09:40 -0500
+Message-ID: <006d01d1377c$e9ddbab0$bd993010$@who-villeisp.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_006E_01D13753.01091240"
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AdE3fOmsudtMp92uRb2ABVzNoCxYMA==
+Content-Language: en-us
+
+This is a multipart message in MIME format.
+
+------=_NextPart_000_006E_01D13753.01091240
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+Dear Cindy Lou,
+
+ 
+
+I am writing to apologize for what I did to you so long ago.  I wronged you
+and all the Whos down in Who-ville due to my extreme misunderstanding of
+Christmas and a deep-seated hatred.  I should have never lied to you, and I
+should have never stolen those gifts on Christmas Eve.  I realize that even
+returning them on Christmas morn didn't erase my crimes completely.  I seek
+your forgiveness.
+
+ 
+
+You see, on Mount Crumpit that fateful Christmas morning, I learned th[4 bytes missing in capture file]at
+Christmas doesn't come from a store.  In fact, I discovered that Christmas
+means a whole lot more!
+
+ 
+
+When I returned their gifts, the Whos embraced me.  They forgave.  I was
+stunned, and my heart grew even more.  Why, they even let me carve the roast
+beast!  They demonstrated to me that the holiday season is, in part, about
+forgiveness and love, and that's the gift that all the Whos gave to me that
+morning so long ago.  I honestly tear up thinking about it.
+
+ 
+
+I don't expect you to forgive me, Cindy Lou.  But, you have my deepest and
+most sincere apologies.
+
+ 
+
+And, above all, don't let my horrible actions from so long ago taint you in
+any way.  I understand you've grown into an amazing business leader.  You
+are a precious and beautiful Who, my dear.  Please use your skills wisely
+and to help and support your fellow Who, especially during the holidays.
+
+ 
+
+I sincerely wish you a holiday season full of kindness and warmth,
+
+ 
+
+--The Grinch
+
+ 
+
+
+------=_NextPart_000_006E_01D13753.01091240
+Content-Type: text/html;
+	charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><META =
+HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; =
+charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
+(filtered medium)"><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+..MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DEN-US =
+link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
+class=3DMsoNormal>Dear Cindy Lou,<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>I am writing =
+to apologize for what I did to you so long ago.&nbsp; I wronged you and =
+all the Whos down in Who-ville due to my extreme misunderstanding of =
+Christmas and a deep-seated hatred.&nbsp; I should have never lied to =
+you, and I should have never stolen those gifts on Christmas Eve.&nbsp; =
+I realize that even returning them on Christmas morn didn&#8217;t erase =
+my crimes completely.&nbsp; I seek your forgiveness.<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>You see, on =
+Mount Crumpit that fateful Christmas morning, I learned that Christmas =
+doesn&#8217;t come from a store.&nbsp; In fact, I discovered that =
+Christmas means a whole lot more!<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>When I =
+returned their gifts, the Whos embraced me.&nbsp; They forgave.&nbsp; I =
+was stunned, and my heart grew even more.&nbsp; Why, they even let me =
+carve the roast beast!&nbsp; They demonstrated to me that the holiday =
+season is, in part, about forgiveness and love, and that&#8217;s the =
+gift that all the Whos gave to me that morning so long ago.&nbsp; I =
+honestly tear up thinking about it.<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>I =
+don&#8217;t expect you to forgive me, Cindy Lou.&nbsp; But, you have my =
+deepest and most sincere apologies.<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>And, above =
+all, don&#8217;t let my horrible actions from so long ago taint you in =
+any way.&nbsp; I understand you&#8217;ve grown into an amazing business =
+leader.&nbsp; You are a precious and beautiful Who, my dear.&nbsp; =
+Please use your skills wisely and to help and support your fellow Who, =
+especially during the holidays.<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>I sincerely =
+wish you a holiday season full of kindness and warmth,<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>--The =
+Grinch<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p></div></body></html>
+------=_NextPart_000_006E_01D13753.01091240--
+
+.
+QUIT
++OK Logging out.

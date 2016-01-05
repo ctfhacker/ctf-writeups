@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/local/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 6.47 scan initiated Fri Dec 11 09:23:05 2015 as: nmap -p- -oA portscan -T4 52.64.191.71 -->
+<nmaprun scanner="nmap" args="nmap -p- -oA portscan -T4 52.64.191.71" start="1449847385" startstr="Fri Dec 11 09:23:05 2015" version="6.47" xmloutputversion="1.04">
+<scaninfo type="connect" protocol="tcp" numservices="65535" services="1-65535"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1449847385" endtime="1449847596"><status state="up" reason="syn-ack" reason_ttl="0"/>
+<address addr="52.64.191.71" addrtype="ipv4"/>
+<hostnames>
+<hostname name="ec2-52-64-191-71.ap-southeast-2.compute.amazonaws.com" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="4242"><state state="closed" reason="conn-refused" reason_ttl="0"/><service name="vrml-multi-use" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5555"><state state="closed" reason="conn-refused" reason_ttl="0"/><service name="freeciv" method="table" conf="3"/></port>
+</ports>
+<times srtt="242411" rttvar="8227" to="275319"/>
+</host>
+<runstats><finished time="1449847596" timestr="Fri Dec 11 09:26:36 2015" elapsed="211.22" summary="Nmap done at Fri Dec 11 09:26:36 2015; 1 IP address (1 host up) scanned in 211.22 seconds" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

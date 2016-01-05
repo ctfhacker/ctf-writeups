@@ -1,0 +1,4 @@
+# Nmap 6.47 scan initiated Fri Dec 11 09:23:37 2015 as: nmap -p- -oA portscan -T4 54.233.105.81
+Host: 54.233.105.81 (ec2-54-233-105-81.sa-east-1.compute.amazonaws.com)	Status: Up
+Host: 54.233.105.81 (ec2-54-233-105-81.sa-east-1.compute.amazonaws.com)	Ports: 80/open/tcp//http///, 4242/open/tcp//vrml-multi-use///, 5555/closed/tcp//freeciv///	Ignored State: filtered (65532)
+# Nmap done at Fri Dec 11 09:26:18 2015 -- 1 IP address (1 host up) scanned in 161.09 seconds

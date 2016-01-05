@@ -1,0 +1,8 @@
+# Nmap 6.47 scan initiated Thu Dec 10 15:06:14 2015 as: nmap -p- -oA 52.34.3.80_out -T4 --open 52.34.3.80
+Nmap scan report for ec2-52-34-3-80.us-west-2.compute.amazonaws.com (52.34.3.80)
+Host is up (0.096s latency).
+Not shown: 65532 filtered ports, 2 closed ports
+PORT   STATE SERVICE
+80/tcp open  http
+
+# Nmap done at Thu Dec 10 15:09:13 2015 -- 1 IP address (1 host up) scanned in 179.53 seconds

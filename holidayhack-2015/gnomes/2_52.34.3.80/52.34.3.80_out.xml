@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/local/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 6.47 scan initiated Thu Dec 10 15:06:14 2015 as: nmap -p- -oA 52.34.3.80_out -T4 -&#45;open 52.34.3.80 -->
+<nmaprun scanner="nmap" args="nmap -p- -oA 52.34.3.80_out -T4 -&#45;open 52.34.3.80" start="1449781574" startstr="Thu Dec 10 15:06:14 2015" version="6.47" xmloutputversion="1.04">
+<scaninfo type="connect" protocol="tcp" numservices="65535" services="1-65535"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1449781574" endtime="1449781753"><status state="up" reason="syn-ack" reason_ttl="0"/>
+<address addr="52.34.3.80" addrtype="ipv4"/>
+<hostnames>
+<hostname name="ec2-52-34-3-80.us-west-2.compute.amazonaws.com" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<extraports state="closed" count="2">
+<extrareasons reason="conn-refused" count="2"/>
+</extraports>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" method="table" conf="3"/></port>
+</ports>
+<times srtt="95988" rttvar="1814" to="103244"/>
+</host>
+<runstats><finished time="1449781753" timestr="Thu Dec 10 15:09:13 2015" elapsed="179.53" summary="Nmap done at Thu Dec 10 15:09:13 2015; 1 IP address (1 host up) scanned in 179.53 seconds" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

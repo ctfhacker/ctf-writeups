@@ -1,0 +1,243 @@
+220 atnascorp.com ESMTP Postfix (Debian/GNU)
+
+EHLO atnaspc5
+
+250-atnascorp.com
+250-PIPELINING
+250-SIZE 10240000
+250-VRFY
+250-ETRN
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250 DSN
+
+MAIL FROM: <c@atnascorp.com>
+
+250 2.1.0 Ok
+
+RCPT TO: <psychdoctor@whovillepsychiatrists.com>
+
+250 2.1.5 Ok
+
+DATA
+
+354 End data with <CR><LF>.<CR><LF>
+
+From: "c" <c@atnascorp.com>
+To: <psychdoctor@whovillepsychiatrists.com>
+Subject: Answer To Your Question
+Date: Thu, 3 Dec 2015 13:38:15 -0500
+Message-ID: <005a01d12df9$c5b00990$51101cb0$@atnascorp.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+.boundary="----=_NextPart_000_005B_01D12DCF.DCDA76C0"
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AdEt+b3jejRUkW/FSByK/qhouKyIpQ==
+Content-Language: en-us
+
+This is a multipart message in MIME format.
+
+------=_NextPart_000_005B_01D12DCF.DCDA76C0
+Content-Type: text/plain;
+.charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+Dr. O'Malley,
+
+ 
+
+In your recent email, you inquired:
+
+ 
+
+> When did you first notice your anxiety about the holiday season?
+
+ 
+
+Anxiety is hardly the word for it.  It's a deep-seated hatred, Doctor.
+
+ 
+
+Before I get into details, please allow me to remind you that we operate
+under the strictest doctor-patient confidentiality agreement in the
+business.  I have some very powerful lawyers whom I'd hate
+ to invoke in the
+event of some leak on your part.  I seek your help because you are the best
+psychiatrist in all of Who-ville.
+
+ 
+
+To answer your question directly, as a young child (I must have been no more
+than two), I experienced a life-changing interaction.  Very late on
+Christmas Eve, I was awakened to find a grotesque green Who dressed in a
+tattered Santa Claus outfit, standing
+ in my barren living room, attempting
+to shove our holiday tree up the chimney.  My senses heightened, I put on my
+best little-girl innocent voice and asked him what he was doing.  He
+explained that he was "Santy Claus" and needed to send the tree for repair.
+I instantly knew it was a lie, but I humored the old thief so I could escape
+to the safety of my bed.  That horrifying interaction ruined Christmas for
+me that year, and I was terrified of the whole holiday season throughout my
+teen years.
+
+ 
+
+I later learned that the green Who was known as "the Grinch" and had lost
+his mind in the middle of a crime spree to steal Christmas presents.  At the
+very moment of his criminal triumph, he had a pitiful change of heart and
+started playing all nicey-nice.  What an amateur!  When I became an adult,
+my fear of Christmas boiled into true hatred of the whole holiday season.  I
+knew that I had to stop Christmas from coming.  But how?
+
+ 
+
+I vowed to finish what the Grinch had started, but to do it at
+ a far larger
+scale.  Using the latest technology and a distributed channel of burglars,
+we'd rob 2 million houses, grabbing their most precious gifts, and selling
+them on the open market.  We'll destroy Christmas as two million homes full
+of people all cry "BOO-HOO", and we'll turn a handy profit on the whole
+deal.
+
+ 
+
+Is this "wrong"?  I simply don't care.  I bear the bitter scars o
+f the
+Grinch's malfeasance, and singing a little "Fahoo Fores" isn't gonna fix
+that!
+
+ 
+
+What is your advice, doctor?
+
+ 
+
+Signed,
+
+Cindy Lou Who
+
+
+------=_NextPart_000_005B_01D12DCF.DCDA76C0
+Content-Type: text/html;
+.charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><META =
+HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; =
+charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
+(filtered medium)"><style><!--
+/* Font Definitions */
+@font-face
+.{font-family:"Cambria Math";
+.panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+.{font-family:Calibri;
+.panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+.{margin:0in;
+.margin-bottom:.0001pt;
+.font-
+size:12.0pt;
+.font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+.{mso-style-priority:99;
+.color:#0563C1;
+.text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+.{mso-style-priority:99;
+.color:#954F72;
+.text-decoration:underline;}
+span.EmailStyle17
+.{mso-style-type:personal-compose;
+.font-family:"Calibri",sans-serif;
+.color:windowtext;}
+..MsoChpDefault
+.{mso
+-style-type:export-only;
+.font-family:"Calibri",sans-serif;}
+@page WordSection1
+.{size:8.5in 11.0in;
+.margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+.{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DEN-US =
+link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
+class=3DMsoNormal>Dr. O&#8217;Malley,<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>In your =
+recent email, you inquired:<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>&gt; When =
+did you first notice your anxiety about the holiday =
+season?<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>Anxiety is hardly the word for it.&nbsp; It&#8217;s a =
+deep-seated hatred, Doctor.<o:p></o:p></p><p =
+class=3DMs
+oNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>Before I get =
+into details, please allow me to remind you that we operate under the =
+strictest doctor-patient confidentiality agreement in the =
+business.&nbsp; I have some very powerful lawyers whom I&#8217;d hate to =
+invoke in the event of some leak on your part.&nbsp; I seek your help =
+because you are the best psychiatrist in all of
+ =
+Who-ville.<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>To answer your question directly, as a young child (I =
+must have been no more than two), I experienced a life-changing =
+interaction.&nbsp; Very late on Christmas Eve, I was awakened to find a =
+grotesque green Who dressed in a tattered Santa Claus outfit, standing =
+in my barren living room, attempting to shove our holiday tree up the =
+chimney.&nbsp; My senses heightened, I put on my best little-girl =
+innocent voice and asked him what he was doing.&nbsp; He explained that =
+he was &#8220;Santy Claus&#8221; and needed to send the tree for =
+repair.&nbsp; I instantly knew it was a lie, but I humored the old thief =
+so I could escape to the safety of my bed.&nbsp; That horrifying =
+interaction ruined Christmas for me that year, and I was terrified of =
+the whole holiday season throughout my teen years.<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>I later =
+learned that
+ the green Who was known as &#8220;the Grinch&#8221; and had =
+lost his mind in the middle of a crime spree to steal Christmas =
+presents.&nbsp; At the very moment of his criminal triumph, he had a =
+pitiful change of heart and started playing all nicey-nice.&nbsp; What =
+an amateur!&nbsp; When I became an adult, my fear of Christmas boiled =
+into true hatred of the whole holiday season.&
+nbsp; I knew that I had to =
+stop Christmas from coming.&nbsp; But how?<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>I vowed to =
+finish what the Grinch had started, but to do it at a far larger =
+scale.&nbsp; Using the latest technology and a distributed channel of =
+burglars, we&#8217;d rob 2 million houses, grabbing their most precious =
+gifts, and selling them on the open market.&nbsp; We&#8217;ll destroy =
+Christmas as two million homes full of people all cry =
+&#8220;BOO-HOO&#8221;, and we&#8217;ll turn a handy profit on the whole =
+deal.<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>Is this &#8220;wrong&#8221;?&nbsp; I simply =
+don&#8217;t care.&nbsp; I bear the bitter scars of the Grinch&#8217;s =
+malfeasance, and singing a little &#8220;Fahoo Fores&#8221; isn&#8217;t =
+gonna fix that!<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>What is your =
+advice, doctor?<o:p></o:p></p><p =
+class=3
+DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>Signed,<o:p></o:p></p><p class=3DMsoNormal>Cindy Lou =
+Who<span =
+style=3D'font-size:11.0pt'><o:p></o:p></span></p></div></body></html>
+------=_NextPart_000_005B_01D12DCF.DCDA76C0--
+
+.
+
+250 2.0.0 Ok: queued as 3F548820BD
+
+QUIT
+
+221 2.0.0 Bye
+

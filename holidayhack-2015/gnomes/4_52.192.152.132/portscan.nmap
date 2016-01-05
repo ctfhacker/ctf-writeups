@@ -1,0 +1,10 @@
+# Nmap 6.47 scan initiated Fri Dec 11 09:23:22 2015 as: nmap -p- -oA portscan -T4 52.192.152.132
+Nmap scan report for ec2-52-192-152-132.ap-northeast-1.compute.amazonaws.com (52.192.152.132)
+Host is up (0.17s latency).
+Not shown: 65532 filtered ports
+PORT     STATE  SERVICE
+80/tcp   open   http
+4242/tcp closed vrml-multi-use
+5555/tcp closed freeciv
+
+# Nmap done at Fri Dec 11 09:26:14 2015 -- 1 IP address (1 host up) scanned in 172.06 seconds

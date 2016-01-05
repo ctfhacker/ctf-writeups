@@ -1,0 +1,8 @@
+# Nmap 6.47 scan initiated Thu Dec 10 15:03:51 2015 as: nmap -p- -oA 52.2.229.189_out -T4 --open 52.2.229.189
+Nmap scan report for ec2-52-2-229-189.compute-1.amazonaws.com (52.2.229.189)
+Host is up (0.078s latency).
+Not shown: 65532 filtered ports, 2 closed ports
+PORT   STATE SERVICE
+80/tcp open  http
+
+# Nmap done at Thu Dec 10 15:05:55 2015 -- 1 IP address (1 host up) scanned in 124.40 seconds

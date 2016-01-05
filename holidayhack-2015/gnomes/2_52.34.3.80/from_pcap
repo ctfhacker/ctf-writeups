@@ -1,0 +1,193 @@
+220 atnascorp.com ESMTP Postfix (Debian/GNU)
+
+EHLO atnaspc5
+
+250-atnascorp.com
+250-PIPELINING
+250-SIZE 10240000
+250-VRFY
+250-ETRN
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250 DSN
+
+MAIL FROM: <c@atnascorp.com>
+
+250 2.1.0 Ok
+
+RCPT TO: <supplier@ginormouselectronicssupplier.com>
+
+250 2.1.5 Ok
+
+DATA
+
+354 End data with <CR><LF>.<CR><LF>
+
+From: "c" <c@atnascorp.com>
+To: <supplier@ginormouselectronicssupplier.com>
+Subject: =?us-ascii?Q?Large_Order_-_Immediate_Attention_Required?=
+Date: Wed, 25 Feb 2015 09:30:39 -0500
+Message-ID: <005001d05107$a1323ef0$e396bcd0$@atnascorp.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+.boundary="----=_NextPart_000_0051_01D050DD.B85D2150"
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AdBRB55/YGpgHUrvTQ+ViBgoKBbizw==
+Content-Language: en-us
+
+This is a multipart message in MIME format.
+
+------=_NextPart_000_0051_01D050DD.B85D2150
+Content-Type: text/plain;
+.charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+Maratha,
+
+ 
+
+As a follow-up to our phone conversation, we'd like to proceed with an order
+of parts for our upcoming product line.  We'll need two million of each of
+the following components:
+
+ 
+
++ Ambarella S2Lm IP Camera Processor System-on-Chip (with an ARM Cortex A9
+CPU and Linux SDK)
+
++ ON Semiconductor AR0330: 3 MP 1/3" CMOS Digital Image Sensor
+
++ Atheros AR6
+233X Wi-Fi adapter
+
++ Texas Instruments TPS65053 switching power supply
+
++ Samsung K4B2G16460 2GB SSDR3 SDRAM
+
++ Samsung K9F1G08U0D 1GB NAND Flash
+
+ 
+
+Given the volume of this purchase, we fully expect the 35% discount you
+mentioned during our phone discussion.  If you cannot agree to this pricing,
+we'll place our order elsewhere.
+
+ 
+
+We need delivery of components to begin no 
+later than April 1, 2015, with
+250,000 units coming each week, with all of them arriving no later than June
+1, 2015.
+
+ 
+
+Finally, as you know, this project requires the utmost secrecy.   Tell NO
+ONE about our order, especially any nosy law enforcement authorities.
+
+ 
+
+Regards,
+
+-CW
+
+
+------=_NextPart_000_0051_01D050DD.B85D2150
+Content-Type: text/html;
+.charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><META =
+HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; =
+charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
+(filtered medium)"><style><!--
+/* Font Definitions */
+@font-face
+.{font-family:"Cambria Math";
+.panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+.{font-family:Calibri;
+.panose-
+1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+.{margin:0in;
+.margin-bottom:.0001pt;
+.font-size:12.0pt;
+.font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+.{mso-style-priority:99;
+.color:#0563C1;
+.text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+.{mso-style-priority:99;
+.color:#954F72;
+.text-decoration:underlin
+e;}
+span.EmailStyle17
+.{mso-style-type:personal-compose;
+.font-family:"Calibri",sans-serif;
+.color:windowtext;}
+..MsoChpDefault
+.{mso-style-type:export-only;
+.font-family:"Calibri",sans-serif;}
+@page WordSection1
+.{size:8.5in 11.0in;
+.margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+.{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DEN-US =
+link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
+class=3DMsoNormal>Maratha,<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>As a =
+follow-up to our phone conversation, we&#8217;d like to proceed with an =
+order of parts for our upcoming product line.&nbsp; We&#8217;ll need two =
+million of each of the following components:<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p
+><p class=3DMsoNormal =
+style=3D'margin-left:.5in'>+ Ambarella S2Lm IP Camera Processor =
+System-on-Chip (with an ARM Cortex A9 CPU and Linux =
+SDK)<o:p></o:p></p><p class=3DMsoNormal style=3D'margin-left:.5in'>+ ON =
+Semiconductor AR0330: 3 MP 1/3&quot; CMOS Digital Image =
+Sensor<o:p></o:p></p><p class=3DMsoNormal style=3D'margin-left:.5in'>+ =
+Atheros AR6233X Wi-Fi adapter<o:p></o:p><
+/p><p class=3DMsoNormal =
+style=3D'margin-left:.5in'>+ Texas Instruments TPS65053 switching power =
+supply<o:p></o:p></p><p class=3DMsoNormal style=3D'margin-left:.5in'>+ =
+Samsung K4B2G16460 2GB SSDR3 SDRAM<o:p></o:p></p><p class=3DMsoNormal =
+style=3D'margin-left:.5in'>+ Samsung K9F1G08U0D 1GB NAND =
+Flash<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>Given the volume of this purchase, we fully expect the =
+35% discount you mentioned during our phone discussion.&nbsp; If you =
+cannot agree to this pricing, we&#8217;ll place our order =
+elsewhere.<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>We need delivery of components to begin no later than =
+April 1, 2015, with 250,000 units coming each week, with all of them =
+arriving no later than June 1, 2015.<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>Finally, as =
+you know, this project requires the utmost secrecy.&nbsp;&nbsp; Tell NO =
+ONE about o
+ur order, especially any nosy law enforcement =
+authorities.<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>Regards,<o:p></o:p></p><p =
+class=3DMsoNormal>-CW<o:p></o:p></p></div></body></html>
+------=_NextPart_000_0051_01D050DD.B85D2150--
+
+
+.
+
+250 2.0.0 Ok: queued as 97F92820BD
+
+QUIT
+
+221 2.0.0 Bye
+

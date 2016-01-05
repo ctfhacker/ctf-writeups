@@ -1,0 +1,23 @@
+Product:        GnomeIYH
+Classification:     Firmware Release Notes
+
+---------------------------------------------------------------------------
+
+IMPORTANT: 
+- DO NOT power cycle the Gnome during the firmware upgrade process.
+
+===========================================================================
+
+Firmware version:   1.1.8.164461
+Release date:       December 3, 2015
+
+- Added a sniffer module
+- Modified naming to begin with a unique name prior to naming by SG
+- Added hit-list functionality to control sniffer output
+
+NOTES:
+- See sniffer_hit_list.txt for initial hit-list values
+- Sniffer outputs pcap format with item or packets of interest and uploads
+  to current parent SG.
+
+  ---------------------------------------------------------------------------
